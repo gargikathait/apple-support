@@ -1,0 +1,181 @@
+{
+  "dataset": {
+    "name": "golden_apple_v1",
+    "n": 175,
+    "labelled_by": "project author",
+    "source": "official TWCS rows"
+  },
+  "intent": {
+    "majority_baseline_macro_f1": 0.01,
+    "keyword_baseline_macro_f1": 0.691,
+    "tfidf_logreg_macro_f1": 0.691,
+    "tfidf_logreg_accuracy": 0.766,
+    "per_class": {
+      "account_access_or_purchase": {
+        "precision": 0.8,
+        "recall": 0.8695652173913043,
+        "f1-score": 0.8333333333333334,
+        "support": 23.0
+      },
+      "app_or_device_functionality": {
+        "precision": 0.8333333333333334,
+        "recall": 0.6451612903225806,
+        "f1-score": 0.7272727272727273,
+        "support": 31.0
+      },
+      "battery_drain": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1-score": 0.8888888888888888,
+        "support": 20.0
+      },
+      "how_to_or_compatibility": {
+        "precision": 0.5217391304347826,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.6486486486486487,
+        "support": 14.0
+      },
+      "other_needs_human": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 7.0
+      },
+      "repair_or_hardware": {
+        "precision": 0.68,
+        "recall": 0.6538461538461539,
+        "f1-score": 0.6666666666666666,
+        "support": 26.0
+      },
+      "security_or_privacy": {
+        "precision": 1.0,
+        "recall": 0.8214285714285714,
+        "f1-score": 0.9019607843137255,
+        "support": 28.0
+      },
+      "update_or_performance": {
+        "precision": 0.88,
+        "recall": 0.8461538461538461,
+        "f1-score": 0.8627450980392157,
+        "support": 26.0
+      },
+      "accuracy": 0.7657142857142857,
+      "macro avg": {
+        "precision": 0.6893840579710144,
+        "recall": 0.7116622420356642,
+        "f1-score": 0.6911895183954007,
+        "support": 175.0
+      },
+      "weighted avg": {
+        "precision": 0.7777010351966873,
+        "recall": 0.7657142857142857,
+        "f1-score": 0.7633747880806706,
+        "support": 175.0
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "account_access_or_purchase",
+        "app_or_device_functionality",
+        "battery_drain",
+        "how_to_or_compatibility",
+        "other_needs_human",
+        "repair_or_hardware",
+        "security_or_privacy",
+        "update_or_performance"
+      ],
+      "values": [
+        [
+          20,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          20,
+          0,
+          0,
+          0,
+          8,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          20,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          12,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          3,
+          1,
+          2,
+          17,
+          0,
+          2
+        ],
+        [
+          1,
+          0,
+          0,
+          2,
+          2,
+          0,
+          23,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          2,
+          0,
+          0,
+          0,
+          22
+        ]
+      ]
+    }
+  },
+  "routing": {
+    "precision": 0.5,
+    "recall": 0.214,
+    "auto_rate": 0.034
+  },
+  "reply": {
+    "method": "train-only nearest-neighbour historical AppleSupport reply for auto-handled requests; safe escalation template otherwise",
+    "mean_evidence_similarity": 0.267,
+    "important_note": "Similarity is an audit signal, not a quality metric. Run scripts/judge_replies.py with a model API and the human calibration set before relying on it."
+  }
+}

@@ -1,0 +1,8 @@
+.venv/
+work/
+data/apple_pairs.csv
+artifacts/*.joblib
+artifacts/evaluation_predictions.jsonl
+artifacts/judge_results.jsonl
+__pycache__/
+*.pyc
