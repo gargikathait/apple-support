@@ -30,7 +30,8 @@ HIGH_RISK_TERMS = {
     "lost", "stolen", "fraud", "hacked", "hack", "unauthorized", "charged",
     "chargeback", "password", "passcode", "apple id", "account", "refund",
     "billing", "receipt", "serial", "imei", "phone number", "email",
-    "emergency", "fire", "swollen", "overheat", "overheating", "smoke",
+    "emergency", "fire", "swollen", "overheat", "overheating", "smoke", "smoking",
 }
 
 HIGH_RISK_INTENTS = {"account_access_or_purchase", "security_or_privacy", "repair_or_hardware"}
+
