@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: applesupport-triage-agent
+    env: python
+    buildCommand: >-
+      pip install -r requirements.txt &&
+      PYTHONPATH=src python scripts/fetch_data.py &&
+      PYTHONPATH=src python scripts/prepare_data.py --twcs work/kaggle-cache/datasets/thoughtvector/customer-support-on-twitter/versions/10/twcs/twcs.csv &&
+      PYTHONPATH=src python scripts/train.py
+    startCommand: uvicorn support_agent.api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONPATH
+        value: src
+      - key: LLM_PROVIDER
+        value: historical

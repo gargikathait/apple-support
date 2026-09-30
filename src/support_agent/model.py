@@ -1,6 +1,7 @@
 from __future__ import annotations
 import json
 from pathlib import Path
+from typing import Optional, Set
 import joblib
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -10,7 +11,7 @@ from sklearn.pipeline import Pipeline
 from .labeling import weak_intent
 from .taxonomy import INTENTS
 
-def train(pair_csv: Path, model_path: Path, exclude_ids: set[str] | None = None) -> dict:
+def train(pair_csv: Path, model_path: Path, exclude_ids: Optional[Set[str]] = None) -> dict:
     frame = pd.read_csv(pair_csv).fillna("")
     frame["intent"] = frame.customer_text.map(weak_intent)
     if exclude_ids:

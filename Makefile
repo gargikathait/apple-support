@@ -4,7 +4,7 @@ PY := $(VENV)/bin/python
 export PYTHONPATH := src
 export PYTHONPYCACHEPREFIX := work/pycache
 
-.PHONY: setup fetch pairs train evaluate demo quick clean-data
+.PHONY: setup fetch pairs train evaluate demo serve test quick clean-data
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -22,10 +22,16 @@ train:
 evaluate:
 	$(PY) scripts/evaluate.py
 
+test:
+	$(PY) -m pytest -q
+
+serve:
+	$(PY) -m uvicorn support_agent.api:app --host 0.0.0.0 --port $${PORT:-8000}
+
 demo:
 	$(PY) scripts/predict.py ".@AppleSupport how do I stop this absurd autocorrect?"
 
-quick: setup fetch pairs train evaluate demo
+quick: setup fetch pairs train evaluate test demo
 
 clean-data:
 	rm -f data/apple_pairs.csv artifacts/apple_agent.joblib artifacts/evaluation.json artifacts/evaluation_predictions.jsonl
