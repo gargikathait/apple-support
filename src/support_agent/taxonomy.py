@@ -32,3 +32,5 @@ HIGH_RISK_TERMS = {
     "billing", "receipt", "serial", "imei", "phone number", "email",
     "emergency", "fire", "swollen", "overheat", "overheating", "smoke",
 }
+
+HIGH_RISK_INTENTS = {"account_access_or_purchase", "security_or_privacy", "repair_or_hardware"}

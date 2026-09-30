@@ -14,3 +14,7 @@
 - Hard-blocked account, security, payment, safety, hardware identifiers, and potential personal identifiers from automatic handling.
 - Treated reply similarity as an audit clue, not reply-quality evidence.
 - Built an LLM judge that is blinded to gold labels and requires independent human calibration; deliberately did not fabricate its agreement result without an API/reviewer.
+- Kept response generation optional and downstream of policy: an LLM may draft an already permitted reply but cannot decide routing or override hard safety blocks.
+- Added a single FastAPI service that serves both the demo interface and JSON API; this is easier to deploy and explain than a separate frontend/backend for a small portfolio project.
+- Logged aggregate operational signals and structured, message-free decisions rather than retaining customer text in application logs.
+- Exposed confidence and evidence thresholds as environment variables, so routing trade-offs can be tested without modifying source code.

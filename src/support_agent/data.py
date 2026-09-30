@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 from pathlib import Path
+from typing import Optional
 
 APPLE = "AppleSupport"
 
@@ -14,7 +15,7 @@ def split_for(tweet_id: str) -> str:
     bucket = int(hashlib.sha256(str(tweet_id).encode()).hexdigest()[:8], 16) % 100
     return "train" if bucket < 80 else "validation" if bucket < 90 else "test"
 
-def extract_apple_pairs(twcs_csv: Path, out_csv: Path, limit: int | None = None) -> int:
+def extract_apple_pairs(twcs_csv: Path, out_csv: Path, limit: Optional[int] = None) -> int:
     """Make direct inbound -> AppleSupport pairs in two low-memory passes."""
     parents: dict[str, tuple[str, str]] = {}
     wanted: set[str] = set()

@@ -42,7 +42,14 @@ def main():
         },
         "routing": {"precision": round(precision_score(route_true, route_pred, pos_label="auto_handle", zero_division=0), 3),
                     "recall": round(recall_score(route_true, route_pred, pos_label="auto_handle", zero_division=0), 3),
-                    "auto_rate": round(route_pred.count("auto_handle") / len(route_pred), 3)},
+                    "auto_rate": round(route_pred.count("auto_handle") / len(route_pred), 3),
+                    "escalation_rate": round(route_pred.count("escalate") / len(route_pred), 3),
+                    "auto_handle_correct": int(sum(a == b == "auto_handle" for a, b in zip(route_true, route_pred)))},
+        "safety": {"sensitive_examples": int(sum(any(t in message.lower() for t in HIGH_RISK_TERMS) for message in gold.customer_message)),
+                   "sensitive_auto_handled": int(sum(x["decision"] == "auto_handle" and any(t in message.lower() for t in HIGH_RISK_TERMS) for x, message in zip(outputs, gold.customer_message))),
+                   "note": "Sensitive-term auto-handles should be zero; this is a deterministic policy check."},
+        "latency": {"mean_ms": round(float(np.mean([x["latency_ms"] for x in outputs])), 1),
+                    "p95_ms": round(float(np.percentile([x["latency_ms"] for x in outputs], 95)), 1)},
         "reply": {"method": "train-only nearest-neighbour historical AppleSupport reply for auto-handled requests; safe escalation template otherwise",
                   "mean_evidence_similarity": round(float(np.mean([x["evidence"]["similarity"] for x in outputs])), 3),
                   "important_note": "Similarity is an audit signal, not a quality metric. Run scripts/judge_replies.py with a model API and the human calibration set before relying on it."},
@@ -50,5 +57,5 @@ def main():
     args.out.parent.mkdir(exist_ok=True, parents=True)
     args.out.write_text(json.dumps(result, indent=2), encoding="utf-8")
     pd.DataFrame([{**{"id": str(gold.iloc[i].id), "message": gold.iloc[i].customer_message, "gold_intent": y[i]}, **outputs[i]} for i in range(len(gold))]).to_json(args.out.with_name("evaluation_predictions.jsonl"), orient="records", lines=True)
-    print(json.dumps({k: result[k] for k in ("intent", "routing")}, indent=2))
+    print(json.dumps({k: result[k] for k in ("intent", "routing", "safety", "latency")}, indent=2))
 if __name__ == "__main__": main()

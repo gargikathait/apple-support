@@ -86,3 +86,22 @@ current approved Apple public-support guidance; compare a small instruction
 model with retrieval; tune thresholds on a separate validation set; and run a
 shadow mode with agent QA measuring harmful-auto-route rate, escalation quality,
 and resolution proxy rather than text overlap.
+
+## Product surface and operational controls
+
+The same conservative workflow is now exposed through a small FastAPI service
+and browser interface. The API returns a typed structured result including
+intent, confidence, risk level/signals, train-only evidence and similarity,
+draft, policy decision, provider state, and latency. `GET /health` is suitable
+for a platform health check; `GET /api/metrics` exposes only in-memory
+aggregates (request count, routing rates, confidence, latency, common intents,
+and escalation reasons). Application logs intentionally omit the raw customer
+message.
+
+An optional OpenAI drafting adapter can be selected by environment variable,
+but it is called only after the deterministic policy has allowed handling. The
+default historical mode runs without credentials. If a configured provider call
+fails, the service fails closed to a human-escalation message;
+if the artifact is unavailable, the analysis endpoint fails closed with a 503.
+This adds a deployable demo surface without changing the reported evaluation or
+claiming that generation quality has been measured.
